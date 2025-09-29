@@ -13,20 +13,10 @@
             background-color: #f8fafc; /* bg-slate-50 */
         }
         
-        /* --- Cải tiến Animations --- */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-40px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(40px); }
-            to { opacity: 1; transform: translateX(0); }
+        /* --- Nâng cấp Animations --- */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         @keyframes pulse-glow {
@@ -44,7 +34,6 @@
             transform: none !important;
         }
         
-        /* Các loại hiệu ứng khác nhau */
         [data-animate="fade-up"] { transform: translateY(30px); }
         [data-animate="fade-left"] { transform: translateX(-40px); }
         [data-animate="fade-right"] { transform: translateX(40px); }
@@ -56,6 +45,22 @@
             background: linear-gradient(90deg, #06b6d4, #3b82f6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+        .image-float {
+            animation: float 4s ease-in-out infinite;
+        }
+        .skill-card img {
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .skill-card:hover img {
+            transform: scale(1.15) rotate(5deg);
+        }
+        .content-card {
+            transition: all 0.3s ease-in-out;
+        }
+        .content-card:hover {
+            box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.15), 0 8px 10px -6px rgba(6, 182, 212, 0.15);
+            border-color: #06b6d4;
         }
     </style>
 </head>
@@ -125,7 +130,7 @@
                     </ul>
                 </div>
                 <div data-animate="fade-left" style="transition-delay: 100ms;" class="md:w-1/3 flex justify-center mt-10 md:mt-0">
-                    <div class="w-64 h-64 rounded-lg relative group">
+                    <div class="w-64 h-64 rounded-lg relative group image-float">
                         <img src="https://i.ibb.co/PL4q0Rj/I-m-Thong-Tran-2.png" alt="Ảnh cá nhân Trần Ngọc Minh Thông" class="rounded-lg absolute inset-0 w-full h-full object-cover group-hover:-translate-x-2 group-hover:-translate-y-2 transition-transform duration-300 shadow-xl">
                         <div class="w-full h-full border-2 border-cyan-500 rounded-lg absolute top-0 left-0 -translate-x-4 -translate-y-4 transition-transform duration-300 group-hover:translate-x-0 group-hover:translate-y-0"></div>
                     </div>
@@ -136,30 +141,22 @@
         <!-- Skills Section -->
         <section id="skills" class="py-24">
             <h2 data-animate="fade-up" class="text-3xl font-bold text-slate-900 text-center mb-12"><span class="text-cyan-600 mr-2">02.</span> Các kỹ năng của mình</h2>
-            <div data-stagger-children class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-5xl mx-auto">
-                <div data-animate="fade-up" class="bg-white p-6 rounded-lg text-center border border-slate-200 hover:border-cyan-500 hover:shadow-xl transition-all transform hover:-translate-y-2">
+            <div data-stagger-children class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
+                <div data-animate="fade-up" class="skill-card bg-white p-6 rounded-lg text-center border border-slate-200 hover:border-cyan-500 hover:shadow-xl transition-all transform hover:-translate-y-2">
                     <img src="https://img.icons8.com/color/96/000000/html-5--v1.png" alt="HTML5 Icon" class="w-16 h-16 mx-auto mb-3"/>
                     <h3 class="font-bold text-slate-800">HTML5</h3>
                 </div>
-                <div data-animate="fade-up" style="transition-delay: 100ms;" class="bg-white p-6 rounded-lg text-center border border-slate-200 hover:border-cyan-500 hover:shadow-xl transition-all transform hover:-translate-y-2">
+                <div data-animate="fade-up" style="transition-delay: 100ms;" class="skill-card bg-white p-6 rounded-lg text-center border border-slate-200 hover:border-cyan-500 hover:shadow-xl transition-all transform hover:-translate-y-2">
                      <img src="https://img.icons8.com/color/96/000000/css3.png" alt="CSS3 Icon" class="w-16 h-16 mx-auto mb-3"/>
                     <h3 class="font-bold text-slate-800">CSS3</h3>
                 </div>
-                <div data-animate="fade-up" style="transition-delay: 200ms;" class="bg-white p-6 rounded-lg text-center border border-slate-200 hover:border-cyan-500 hover:shadow-xl transition-all transform hover:-translate-y-2">
+                <div data-animate="fade-up" style="transition-delay: 200ms;" class="skill-card bg-white p-6 rounded-lg text-center border border-slate-200 hover:border-cyan-500 hover:shadow-xl transition-all transform hover:-translate-y-2">
                      <img src="https://img.icons8.com/color/96/000000/javascript--v1.png" alt="JavaScript Icon" class="w-16 h-16 mx-auto mb-3"/>
                     <h3 class="font-bold text-slate-800">JavaScript</h3>
                 </div>
-                <div data-animate="fade-up" style="transition-delay: 300ms;" class="bg-white p-6 rounded-lg text-center border border-slate-200 hover:border-cyan-500 hover:shadow-xl transition-all transform hover:-translate-y-2">
+                <div data-animate="fade-up" style="transition-delay: 300ms;" class="skill-card bg-white p-6 rounded-lg text-center border border-slate-200 hover:border-cyan-500 hover:shadow-xl transition-all transform hover:-translate-y-2">
                      <img src="https://img.icons8.com/color/96/000000/adobe-photoshop--v1.png" alt="Photoshop Icon" class="w-16 h-16 mx-auto mb-3"/>
                     <h3 class="font-bold text-slate-800">Photoshop</h3>
-                </div>
-                <div data-animate="fade-up" style="transition-delay: 400ms;" class="bg-white p-6 rounded-lg text-center border border-slate-200 hover:border-cyan-500 hover:shadow-xl transition-all transform hover:-translate-y-2">
-                     <img src="https://img.icons8.com/color/96/canva-app.png" alt="Canva Icon" class="w-16 h-16 mx-auto mb-3"/>
-                    <h3 class="font-bold text-slate-800">Canva</h3>
-                </div>
-                <div data-animate="fade-up" style="transition-delay: 500ms;" class="bg-white p-6 rounded-lg text-center border border-slate-200 hover:border-cyan-500 hover:shadow-xl transition-all transform hover:-translate-y-2">
-                     <img src="https://img.icons8.com/color/96/capcut.png" alt="Capcut Icon" class="w-16 h-16 mx-auto mb-3"/>
-                    <h3 class="font-bold text-slate-800">Capcut</h3>
                 </div>
             </div>
         </section>
@@ -245,18 +242,17 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Staggered children animation
                     if (entry.target.hasAttribute('data-stagger-children')) {
                         const children = entry.target.querySelectorAll('[data-animate]');
                         children.forEach((child, index) => {
                             setTimeout(() => {
                                 child.classList.add('is-visible');
-                            }, index * 100); // 100ms delay between each item
+                            }, index * 100);
                         });
-                    } else { // Single element animation
+                    } else {
                         entry.target.classList.add('is-visible');
                     }
-                    observer.unobserve(entry.target); // Animate only once
+                    observer.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.1 });
@@ -288,7 +284,7 @@
                     let thumbnailUrl = item.imageUrl || (item.imageUrls && item.imageUrls[0]) || 'https://placehold.co/600x400/e2e8f0/475569?text=Image';
 
                     const itemElement = `
-                        <div data-animate="fade-up" class="bg-white rounded-lg shadow-lg overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300 border border-slate-200">
+                        <div data-animate="fade-up" class="content-card bg-white rounded-lg shadow-lg overflow-hidden group transform hover:-translate-y-2 transition-all duration-300 border border-slate-200">
                            <a href="view.html?type=${collectionName}&id=${doc.id}" class="block">
                                 <div class="overflow-hidden h-48">
                                     <img src="${thumbnailUrl}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
