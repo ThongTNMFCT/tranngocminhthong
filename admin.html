@@ -483,7 +483,6 @@
                 content: form.content.innerHTML,
             };
             
-            // Only add timestamp when creating a new document
             if (!id) {
                 data.timestamp = serverTimestamp();
             }
@@ -496,18 +495,24 @@
             
             form.saveBtn.disabled = true;
             
-            // Image handling for updates and creation
-            let imageUpdated = false;
             if (form.image && form.image.files[0]) {
-                data.imageUrl = await uploadImageToImgBB(form.image.files[0]);
-                imageUpdated = true;
+                const newUrl = await uploadImageToImgBB(form.image.files[0]);
+                if (!newUrl) {
+                    form.saveBtn.disabled = false;
+                    return;
+                }
+                data.imageUrl = newUrl;
             } else if (form.images && form.images.files.length > 0) {
                 data.imageUrls = [];
                 for (const file of form.images.files) {
                     const url = await uploadImageToImgBB(file);
-                    if (url) data.imageUrls.push(url);
+                    if (!url) {
+                        showNotification("Một trong các ảnh tải lên thất bại. Vui lòng thử lại.", true);
+                        form.saveBtn.disabled = false;
+                        return;
+                    }
+                    data.imageUrls.push(url);
                 }
-                imageUpdated = true;
             }
             
             try {
