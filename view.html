@@ -6,99 +6,108 @@
     <title>Xem chi tiết - Trần Ngọc Minh Thông</title>
     <link rel="icon" href="https://i.ibb.co/cS61WGmW/I-m-Thong-Tran-1.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Đồng bộ font chữ với trang chủ -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .content-body h1, .content-body h2, .content-body h3 { font-weight: 700; margin-top: 1.5em; margin-bottom: 0.5em; }
-        .content-body h1 { font-size: 1.875rem; }
-        .content-body h2 { font-size: 1.5rem; }
-        .content-body h3 { font-size: 1.25rem; }
-        .content-body p { margin-bottom: 1em; line-height: 1.75; }
-        .content-body a { color: #0891b2; text-decoration: underline; }
-        .content-body ul { list-style-type: disc; margin-left: 1.5em; margin-bottom: 1em; }
-        .content-body ol { list-style-type: decimal; margin-left: 1.5em; margin-bottom: 1em; }
-        .content-body blockquote { border-left: 4px solid #cbd5e1; padding-left: 1em; margin: 1em 0; font-style: italic; color: #475569; }
-        .content-body img { max-width: 100%; height: auto; border-radius: 0.5rem; margin: 1.5em 0; }
-        .slideshow-container img {
-            max-height: 70vh;
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f8fafc; /* bg-slate-50 */
+        }
+        /* Style cho nội dung được nhúng từ editor */
+        .content-view h1, .content-view h2, .content-view h3 {
+            font-weight: 700;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        .content-view h1 { font-size: 2.25rem; }
+        .content-view h2 { font-size: 1.875rem; }
+        .content-view h3 { font-size: 1.5rem; }
+        .content-view p {
+            line-height: 1.75;
+            margin-bottom: 1em;
+        }
+        .content-view ul, .content-view ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1em;
+        }
+        .content-view ul { list-style-type: disc; }
+        .content-view ol { list-style-type: decimal; }
+        .content-view a {
+            color: #06b6d4; /* text-cyan-500 */
+            text-decoration: underline;
+        }
+        .content-view img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            margin-top: 1em;
+            margin-bottom: 1em;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .slider-container {
+            aspect-ratio: 16 / 9;
         }
     </style>
 </head>
-<body class="bg-slate-50">
+<body class="text-slate-700">
 
     <!-- Header -->
-     <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200">
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="index.html" class="text-2xl font-bold text-slate-800 hover:text-cyan-600 transition-colors">Trần Ngọc Minh Thông</a>
-            
-            <!-- Desktop Menu -->
             <div class="hidden md:flex items-center space-x-6">
-                <a href="index.html#about" class="text-slate-600 hover:text-cyan-600 transition-colors">Giới thiệu</a>
-                <a href="index.html#skills" class="text-slate-600 hover:text-cyan-600 transition-colors">Kỹ năng</a>
-                <a href="du-an.html" class="text-slate-600 hover:text-cyan-600 transition-colors">Dự án</a>
-                <a href="bai-viet.html" class="text-slate-600 hover:text-cyan-600 transition-colors">Bài viết</a>
-                <a href="thanh-tich.html" class="text-slate-600 hover:text-cyan-600 transition-colors">Thành tích</a>
-                <a href="su-kien.html" class="text-slate-600 hover:text-cyan-600 transition-colors">Sự kiện</a>
+                <a href="du-an.html" id="nav-projects" class="text-slate-600 hover:text-cyan-600 transition-colors">Dự án</a>
+                <a href="bai-viet.html" id="nav-posts" class="text-slate-600 hover:text-cyan-600 transition-colors">Bài viết</a>
+                <a href="thanh-tich.html" id="nav-achievements" class="text-slate-600 hover:text-cyan-600 transition-colors">Thành tích</a>
+                <a href="su-kien.html" id="nav-events" class="text-slate-600 hover:text-cyan-600 transition-colors">Sự kiện</a>
             </div>
             <a href="index.html#contact" class="hidden md:block bg-cyan-500 text-white font-bold py-2 px-5 rounded-lg hover:bg-cyan-600 transition-colors">Liên hệ</a>
-
-             <!-- Mobile Menu Button -->
             <div class="md:hidden">
-                <button id="mobile-menu-button" class="text-slate-800 focus:outline-none z-50 relative">
-                    <svg id="menu-open-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h10"></path></svg>
-                    <svg id="menu-close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                <button id="mobile-menu-button" class="text-slate-800 focus:outline-none z-50 relative h-6 w-6">
+                    <svg id="menu-open-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h10"></path></svg>
+                    <svg id="menu-close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
         </nav>
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-200">
-            <a href="index.html#about" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Giới thiệu</a>
-            <a href="index.html#skills" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Kỹ năng</a>
-            <a href="du-an.html" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Dự án</a>
-            <a href="bai-viet.html" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Bài viết</a>
-            <a href="thanh-tich.html" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Thành tích</a>
-            <a href="su-kien.html" class="block py-3 px-6 text-cyan-600 bg-cyan-50 font-semibold">Sự kiện</a>
-            <a href="index.html#contact" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Liên hệ</a>
+             <a href="du-an.html" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Dự án</a>
+             <a href="bai-viet.html" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Bài viết</a>
+             <a href="thanh-tich.html" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Thành tích</a>
+             <a href="su-kien.html" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Sự kiện</a>
+             <a href="index.html#contact" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Liên hệ</a>
         </div>
     </header>
 
-    <main class="container mx-auto px-6 py-12 min-h-screen">
-        <div id="content-container" class="max-w-4xl mx-auto">
-            <!-- Breadcrumbs -->
-            <div id="breadcrumb" class="mb-8 text-sm text-slate-500">
-                <!-- Breadcrumb will be generated here -->
-            </div>
+    <!-- Main Content -->
+    <main id="main-content" class="container mx-auto px-6 py-12 min-h-screen">
+        <!-- Breadcrumbs -->
+        <div id="breadcrumb" class="mb-8 text-sm text-slate-500">
+            <a href="index.html" class="hover:text-cyan-600">Trang chủ</a>
+            <span class="mx-2">/</span>
+            <span id="breadcrumb-category">...</span>
+        </div>
 
-            <!-- Title -->
-            <h1 id="content-title" class="text-3xl md:text-4xl font-extrabold text-slate-800 mb-4">Đang tải nội dung...</h1>
-            <div class="flex flex-col sm:flex-row sm:items-center gap-x-6 gap-y-2 text-slate-400 mb-8">
-                <p id="content-timestamp"></p>
-                <p id="event-date-display" class="hidden font-medium text-cyan-600"></p>
-            </div>
-            
-            <!-- Cover Image / Slideshow -->
-            <div id="cover-image-container" class="mb-8 hidden"></div>
-            <div id="slideshow-container" class="mb-8 hidden relative">
-                <img id="slideshow-image" src="" alt="Hình ảnh chi tiết" class="w-full object-contain rounded-lg shadow-md slideshow-container">
-                <button id="prev-slide" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white text-slate-800 font-bold p-2 rounded-full shadow-md transition disabled:opacity-50">&lt;</button>
-                <button id="next-slide" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white text-slate-800 font-bold p-2 rounded-full shadow-md transition disabled:opacity-50">&gt;</button>
-            </div>
-
-            <!-- Main Content -->
-            <article id="content-body" class="prose lg:prose-xl max-w-none text-slate-700">
-                <!-- Content will be loaded here -->
-            </article>
-
-            <div id="loading-spinner" class="text-center py-20">
-                <p>Đang tải chi tiết...</p>
+        <!-- Content will be loaded here -->
+        <div id="content-container" class="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-lg shadow-lg">
+            <!-- Skeleton Loader -->
+            <div class="animate-pulse">
+                <div class="h-8 bg-slate-200 rounded w-3/4 mb-4"></div>
+                <div class="h-4 bg-slate-200 rounded w-1/4 mb-8"></div>
+                <div class="h-64 bg-slate-200 rounded mb-8"></div>
+                <div class="space-y-3">
+                    <div class="h-4 bg-slate-200 rounded"></div>
+                    <div class="h-4 bg-slate-200 rounded w-5/6"></div>
+                    <div class="h-4 bg-slate-200 rounded w-4/6"></div>
+                </div>
             </div>
         </div>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-slate-800 text-white mt-16">
-        <div class="container mx-auto px-6 py-8 text-center">
-            <p>&copy; 2024 Trần Ngọc Minh Thông. All Rights Reserved.</p>
+     <footer class="py-6 mt-12 border-t border-slate-200">
+        <div class="container mx-auto px-6 text-center text-slate-500">
+            <p>Thiết kế & Xây dựng bởi Trần Ngọc Minh Thông</p>
+            <p>&copy; 2025. Mọi quyền được bảo lưu.</p>
         </div>
     </footer>
 
@@ -110,7 +119,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- Mobile Menu ---
+        // Mobile Menu
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         const menuOpenIcon = document.getElementById('menu-open-icon');
@@ -122,43 +131,9 @@
             menuCloseIcon.classList.toggle('hidden');
         });
 
-        // --- Content Loading ---
-        const contentTitle = document.getElementById('content-title');
-        const contentTimestamp = document.getElementById('content-timestamp');
-        const eventDateDisplay = document.getElementById('event-date-display');
-        const contentBody = document.getElementById('content-body');
-        const breadcrumb = document.getElementById('breadcrumb');
-        const loadingSpinner = document.getElementById('loading-spinner');
-        const coverImageContainer = document.getElementById('cover-image-container');
-        const slideshowContainer = document.getElementById('slideshow-container');
-        const slideshowImage = document.getElementById('slideshow-image');
-        const prevSlide = document.getElementById('prev-slide');
-        const nextSlide = document.getElementById('next-slide');
-
+        const contentContainer = document.getElementById('content-container');
+        const breadcrumbCategory = document.getElementById('breadcrumb-category');
         let currentImageIndex = 0;
-        let imageUrls = [];
-
-        function updateSlideshow() {
-            if (imageUrls.length > 0) {
-                slideshowImage.src = imageUrls[currentImageIndex];
-                prevSlide.disabled = currentImageIndex === 0;
-                nextSlide.disabled = currentImageIndex === imageUrls.length - 1;
-            }
-        }
-
-        prevSlide.addEventListener('click', () => {
-            if (currentImageIndex > 0) {
-                currentImageIndex--;
-                updateSlideshow();
-            }
-        });
-
-        nextSlide.addEventListener('click', () => {
-            if (currentImageIndex < imageUrls.length - 1) {
-                currentImageIndex++;
-                updateSlideshow();
-            }
-        });
 
         async function loadContent() {
             const params = new URLSearchParams(window.location.search);
@@ -166,80 +141,97 @@
             const id = params.get('id');
 
             if (!type || !id) {
-                contentTitle.textContent = "Không tìm thấy nội dung";
-                loadingSpinner.classList.add('hidden');
+                contentContainer.innerHTML = '<p class="text-red-500 text-center">Không tìm thấy nội dung yêu cầu.</p>';
                 return;
             }
 
-            const typeMap = {
-                posts: { name: 'Bài viết', path: 'bai-viet.html' },
-                achievements: { name: 'Thành tích', path: 'thanh-tich.html' },
-                projects: { name: 'Dự án', path: 'du-an.html' },
-                events: { name: 'Sự kiện', path: 'su-kien.html' },
+            // Update breadcrumb and active menu item
+            const categoryMap = {
+                'posts': 'Bài viết',
+                'achievements': 'Thành tích',
+                'projects': 'Dự án',
+                'events': 'Sự kiện'
             };
+            const categoryName = categoryMap[type] || '...';
+            breadcrumbCategory.innerHTML = `<a href="${type.slice(0,-1)}.html" class="hover:text-cyan-600">${categoryName}</a>`;
+            document.title = `Chi tiết - ${categoryName}`;
+            
+            const activeNav = document.getElementById(`nav-${type}`);
+            if(activeNav) {
+                activeNav.classList.add('font-semibold', 'text-cyan-600');
+            }
 
-            const docRef = doc(db, type, id);
+
             try {
+                const docRef = doc(db, type, id);
                 const docSnap = await getDoc(docRef);
 
                 if (docSnap.exists()) {
                     const data = docSnap.data();
-                    const typeInfo = typeMap[type] || { name: 'Nội dung', path: 'index.html' };
-
-                    // Update Title & Breadcrumb
-                    document.title = `${data.title} - Trần Ngọc Minh Thông`;
-                    breadcrumb.innerHTML = `
-                        <a href="index.html" class="hover:text-cyan-600">Trang chủ</a> &raquo;
-                        <a href="${typeInfo.path}" class="hover:text-cyan-600">${typeInfo.name}</a> &raquo;
-                        <span class="text-slate-800">${data.title}</span>
-                    `;
+                    document.title = `${data.title || 'Chi tiết'} - Trần Ngọc Minh Thông`;
                     
-                    // Update active menu item
-                    document.querySelectorAll('header a').forEach(a => {
-                        if (a.getAttribute('href') === typeInfo.path) {
-                            a.classList.add('font-semibold', 'text-cyan-600');
-                        } else {
-                            a.classList.remove('font-semibold', 'text-cyan-600');
-                        }
-                    });
-                     document.querySelector(`#mobile-menu a[href="${typeInfo.path}"]`)?.classList.add('bg-cyan-50', 'font-semibold', 'text-cyan-600');
-
-
-                    contentTitle.textContent = data.title;
+                    let contentHtml = `<h1 class="text-4xl font-black text-slate-900 mb-2">${data.title}</h1>`;
+                    
                     if (data.timestamp) {
-                        contentTimestamp.textContent = `Đăng ngày: ${new Date(data.timestamp.seconds * 1000).toLocaleDateString('vi-VN')}`;
-                    }
-                     if (data.eventDate) {
-                        const [year, month, day] = data.eventDate.split('-');
-                        eventDateDisplay.textContent = `Ngày diễn ra: ${day}/${month}/${year}`;
-                        eventDateDisplay.classList.remove('hidden');
-                    }
-                    contentBody.innerHTML = data.content;
-
-                    // Handle images
-                    if (data.imageUrl) { // For posts and events
-                        coverImageContainer.innerHTML = `<img src="${data.imageUrl}" alt="${data.title}" class="w-full h-auto object-cover rounded-lg shadow-md max-h-[70vh]">`;
-                        coverImageContainer.classList.remove('hidden');
-                    } else if (data.imageUrls && data.imageUrls.length > 0) { // For achievements/projects
-                        imageUrls = data.imageUrls;
-                        slideshowContainer.classList.remove('hidden');
-                        updateSlideshow();
+                        const date = data.timestamp.toDate();
+                        contentHtml += `<p class="text-slate-500 mb-8">Đăng ngày ${date.toLocaleDateString('vi-VN')}</p>`;
+                    } else if (data.eventDate) {
+                         contentHtml += `<p class="text-slate-500 mb-8">Diễn ra vào ngày: ${new Date(data.eventDate).toLocaleDateString('vi-VN')}</p>`;
                     }
                     
+                    if (data.imageUrls && data.imageUrls.length > 0) {
+                         contentHtml += `
+                            <div class="relative w-full slider-container mb-8">
+                                <img id="slider-image" src="${data.imageUrls[0]}" alt="${data.title}" class="w-full h-full object-contain rounded-lg bg-slate-100">
+                                ${data.imageUrls.length > 1 ? `
+                                <button id="prev-btn" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white text-slate-800 font-bold p-2 rounded-full shadow-md transition">&lt;</button>
+                                <button id="next-btn" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white text-slate-800 font-bold p-2 rounded-full shadow-md transition">&gt;</button>
+                                ` : ''}
+                            </div>
+                         `;
+                    } else if (data.imageUrl) {
+                        contentHtml += `<img src="${data.imageUrl}" alt="${data.title}" class="w-full h-auto object-cover rounded-lg mb-8">`;
+                    }
+
+                    contentHtml += `<div class="content-view">${data.content}</div>`;
+                    contentContainer.innerHTML = contentHtml;
+                    
+                    // Add slider functionality if exists
+                    if (data.imageUrls && data.imageUrls.length > 1) {
+                        setupSlider(data.imageUrls);
+                    }
+
                 } else {
-                    contentTitle.textContent = "Nội dung không tồn tại";
+                    contentContainer.innerHTML = '<p class="text-red-500 text-center">Nội dung không tồn tại.</p>';
                 }
             } catch (error) {
                 console.error("Error fetching document:", error);
-                contentTitle.textContent = "Lỗi khi tải nội dung";
-            } finally {
-                loadingSpinner.classList.add('hidden');
+                contentContainer.innerHTML = '<p class="text-red-500 text-center">Lỗi khi tải dữ liệu.</p>';
             }
+        }
+
+        function setupSlider(images) {
+            const sliderImage = document.getElementById('slider-image');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+
+            function updateImage() {
+                sliderImage.src = images[currentImageIndex];
+            }
+
+            prevBtn.addEventListener('click', () => {
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                updateImage();
+            });
+
+            nextBtn.addEventListener('click', () => {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                updateImage();
+            });
         }
 
         loadContent();
     </script>
-
 </body>
 </html>
 
