@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sự kiện - Trần Ngọc Minh Thông</title>
+    <title>Thành Tích - Trần Ngọc Minh Thông</title>
     <link rel="icon" href="https://i.ibb.co/cS61WGmW/I-m-Thong-Tran-1.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
@@ -42,8 +42,8 @@
             <div class="hidden md:flex items-center space-x-6">
                 <a href="du-an.html" class="text-slate-600 hover:text-cyan-600 transition-colors">Dự án</a>
                 <a href="bai-viet.html" class="text-slate-600 hover:text-cyan-600 transition-colors">Bài viết</a>
-                <a href="thanh-tich.html" class="text-slate-600 hover:text-cyan-600 transition-colors">Thành tích</a>
-                <a href="su-kien.html" class="font-semibold text-cyan-600">Sự kiện</a>
+                <a href="thanh-tich.html" class="font-semibold text-cyan-600">Thành tích</a>
+                <a href="su-kien.html" class="text-slate-600 hover:text-cyan-600 transition-colors">Sự kiện</a>
             </div>
             <a href="index.html#contact" class="hidden md:block bg-cyan-500 text-white font-bold py-2 px-5 rounded-lg hover:bg-cyan-600 transition-colors">Liên hệ</a>
             <div class="md:hidden">
@@ -64,8 +64,8 @@
 
     <!-- Main Content -->
     <main class="container mx-auto px-6 py-12 min-h-screen">
-        <section id="events-timeline">
-            <h2 class="text-4xl font-extrabold text-slate-900 mb-16 text-center">Dòng thời gian sự kiện</h2>
+        <section id="achievements-timeline">
+            <h2 class="text-4xl font-extrabold text-slate-900 mb-16 text-center">Dòng thời gian thành tích</h2>
             <div id="timeline-container" class="relative">
                 <!-- Skeleton Loader -->
                 <div class="animate-pulse space-y-12">
@@ -118,35 +118,35 @@
 
         const timelineContainer = document.getElementById('timeline-container');
 
-        async function loadEventsTimeline() {
+        async function loadAchievementsTimeline() {
             try {
-                const q = query(collection(db, 'events'), orderBy('eventDate', 'desc'));
+                const q = query(collection(db, 'achievements'), orderBy('achievementDate', 'desc'));
                 const querySnapshot = await getDocs(q);
 
                 if (querySnapshot.empty) {
-                    timelineContainer.innerHTML = '<p class="text-slate-500 text-center">Chưa có sự kiện nào được đăng.</p>';
+                    timelineContainer.innerHTML = '<p class="text-slate-500 text-center">Chưa có thành tích nào được đăng.</p>';
                     return;
                 }
                 
-                const eventsByMonth = {};
+                const achievementsByMonth = {};
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
-                    if (!data.eventDate) return; 
+                    if (!data.achievementDate) return; 
 
-                    const date = new Date(data.eventDate);
+                    const date = new Date(data.achievementDate);
                     const monthYear = `Tháng ${date.getUTCMonth() + 1}, ${date.getUTCFullYear()}`;
 
-                    if (!eventsByMonth[monthYear]) {
-                        eventsByMonth[monthYear] = [];
+                    if (!achievementsByMonth[monthYear]) {
+                        achievementsByMonth[monthYear] = [];
                     }
-                    eventsByMonth[monthYear].push({ id: doc.id, ...data });
+                    achievementsByMonth[monthYear].push({ id: doc.id, ...data });
                 });
                 
                 timelineContainer.innerHTML = '<div class="absolute top-0 left-0 md:left-1/2 -translate-x-1/2 h-full w-0.5 bg-slate-200" aria-hidden="true"></div>';
                 
                 let itemCounter = 0;
-                for (const monthYear in eventsByMonth) {
-                    const group = eventsByMonth[monthYear];
+                for (const monthYear in achievementsByMonth) {
+                    const group = achievementsByMonth[monthYear];
                     
                     const monthMarker = `
                         <div class="flex justify-center my-8 md:my-12">
@@ -160,20 +160,20 @@
                         const sideClass = isEven ? 'md:pr-10 md:w-1/2' : 'md:ml-[50%] md:pl-10 md:w-1/2';
                         const animationDirection = isEven ? 'fade-right' : 'fade-left';
                         
-                        const thumbnailUrl = item.imageUrl || 'https://placehold.co/600x400/e2e8f0/475569?text=Event';
+                        const thumbnailUrl = (item.imageUrls && item.imageUrls[0]) || 'https://placehold.co/600x400/e2e8f0/475569?text=Image';
                         
                         const itemHtml = `
                             <div class="relative mb-12" data-animate="${animationDirection}">
                                 <div class="hidden md:block absolute top-8 ${isEven ? 'right-1/2 -mr-2.5' : 'left-1/2 -ml-2.5'} w-5 h-5 bg-white border-4 border-cyan-500 rounded-full z-10"></div>
                                 <div class="${sideClass}">
                                     <div class="content-card bg-white rounded-lg shadow-lg overflow-hidden group border border-slate-200">
-                                        <a href="view.html?type=events&id=${item.id}" class="block">
+                                        <a href="view.html?type=achievements&id=${item.id}" class="block">
                                             <div class="overflow-hidden h-48">
                                                 <img src="${thumbnailUrl}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                                             </div>
                                             <div class="p-6">
                                                 <h3 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-cyan-600 transition-colors">${item.title}</h3>
-                                                <p class="text-sm text-slate-500">Ngày diễn ra: ${new Date(item.eventDate).toLocaleDateString('vi-VN')}</p>
+                                                <p class="text-sm text-slate-500">Ngày đạt: ${new Date(item.achievementDate).toLocaleDateString('vi-VN')}</p>
                                             </div>
                                         </a>
                                     </div>
@@ -199,12 +199,12 @@
 
 
             } catch (error) {
-                console.error("Error loading events timeline: ", error);
-                timelineContainer.innerHTML = '<p class="text-red-500 text-center">Đã xảy ra lỗi khi tải dòng thời gian. Vui lòng kiểm tra lại quy tắc bảo mật và đảm bảo các sự kiện đều có "Ngày diễn ra".</p>';
+                console.error("Error loading achievements timeline: ", error);
+                timelineContainer.innerHTML = '<p class="text-red-500 text-center">Đã xảy ra lỗi khi tải dòng thời gian. Vui lòng kiểm tra lại quy tắc bảo mật và đảm bảo các thành tích đều có "Ngày đạt".</p>';
             }
         }
 
-        loadEventsTimeline();
+        loadAchievementsTimeline();
     </script>
 
 </body>
