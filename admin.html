@@ -138,6 +138,44 @@
                         <label for="achievementTitle" class="block text-slate-700 font-medium mb-2">Tên thành tích / giải thưởng</label>
                         <input type="text" id="achievementTitle" class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500">
                     </div>
+                     <div>
+                        <label class="block text-slate-700 font-medium mb-2">Loại thành tích</label>
+                        <div class="flex items-center space-x-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="achievementType" value="individual" class="form-radio text-cyan-600" checked>
+                                <span class="ml-2 text-slate-700">Cá nhân</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="achievementType" value="team" class="form-radio text-cyan-600">
+                                <span class="ml-2 text-slate-700">Thành viên (Team)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="achievement-members-section" class="hidden space-y-4 p-4 border border-slate-200 rounded-md">
+                        <h4 class="font-semibold text-slate-800">Quản lý thành viên</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="md:col-span-2">
+                                <label for="memberName" class="block text-sm font-medium text-slate-600">Tên thành viên</label>
+                                <input type="text" id="memberName" class="mt-1 w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                            </div>
+                            <div>
+                                <label for="memberRole" class="block text-sm font-medium text-slate-600">Vai trò</label>
+                                <select id="memberRole" class="mt-1 w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                                    <option value="Thành viên">Thành viên</option>
+                                    <option value="Mentor">Mentor</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="button" id="addMemberBtn" class="bg-slate-200 text-slate-800 font-semibold py-2 px-4 rounded-md hover:bg-slate-300 transition-colors text-sm">Thêm thành viên</button>
+                        <div id="membersList" class="space-y-2">
+                            <!-- Members will be listed here -->
+                        </div>
+                    </div>
+                    <div>
+                        <label for="achievementDate" class="block text-slate-700 font-medium mb-2">Ngày đạt</label>
+                        <input type="date" id="achievementDate" class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                    </div>
                     <div>
                         <label class="block text-slate-700 font-medium mb-2">Nội dung mô tả</label>
                          <div class="editor-container">
@@ -280,6 +318,7 @@
 
         // State variables
         let docToDelete = { id: null, collection: null };
+        let achievementMembers = [];
 
         // DOM Elements
         const loginContainer = document.getElementById('login-container');
@@ -308,13 +347,18 @@
             achievement: {
                 section: document.getElementById('achievement-section'),
                 title: document.getElementById('achievementTitle'),
+                date: document.getElementById('achievementDate'),
                 content: document.getElementById('contentEditorAchievements'),
                 images: document.getElementById('achievementImages'),
                 imagePreview: document.getElementById('achievement-image-preview'),
                 saveBtn: document.getElementById('saveAchievementBtn'),
                 formTitle: document.getElementById('achievement-form-title'),
                 cancelBtn: document.getElementById('cancel-edit-achievement'),
-                editingIdField: document.getElementById('editingAchievementId')
+                editingIdField: document.getElementById('editingAchievementId'),
+                membersSection: document.getElementById('achievement-members-section'),
+                addMemberBtn: document.getElementById('addMemberBtn'),
+                membersList: document.getElementById('membersList'),
+                typeRadios: document.querySelectorAll('input[name="achievementType"]')
             },
             project: {
                 section: document.getElementById('project-section'),
@@ -432,10 +476,19 @@
             if(form.images) form.images.value = '';
             if(form.imagePreview) form.imagePreview.innerHTML = '';
             if(form.date) form.date.value = '';
+
+            if (type === 'achievement') {
+                document.querySelector('input[name="achievementType"][value="individual"]').checked = true;
+                form.membersSection.classList.add('hidden');
+                achievementMembers = [];
+                renderMembers();
+            }
         }
         
         Object.keys(forms).forEach(type => {
-            forms[type].cancelBtn.addEventListener('click', () => resetForm(type));
+            if (forms[type].cancelBtn) {
+                forms[type].cancelBtn.addEventListener('click', () => resetForm(type));
+            }
         });
 
         async function startEdit(collectionName, id) {
@@ -468,7 +521,21 @@
                  form.imagePreview.innerHTML = `<p class="text-xs text-slate-500">Đang có ${data.imageUrls?.length || 0} ảnh. Chọn file mới sẽ thay thế toàn bộ ảnh cũ.</p>`;
             }
             if (form.date) {
-                form.date.value = data.eventDate || '';
+                const dateField = type === 'event' ? 'eventDate' : 'achievementDate';
+                form.date.value = data[dateField] || '';
+            }
+            if (type === 'achievement') {
+                const typeRadio = document.querySelector(`input[name="achievementType"][value="${data.type || 'individual'}"]`);
+                if (typeRadio) typeRadio.checked = true;
+
+                if (data.type === 'team' && Array.isArray(data.members)) {
+                    achievementMembers = [...data.members];
+                    form.membersSection.classList.remove('hidden');
+                } else {
+                    achievementMembers = [];
+                    form.membersSection.classList.add('hidden');
+                }
+                renderMembers();
             }
         }
         
@@ -487,7 +554,21 @@
                 data.timestamp = serverTimestamp();
             }
 
-            if (form.date) data.eventDate = form.date.value;
+            if (form.date) {
+                 const dateField = type === 'event' ? 'eventDate' : 'achievementDate';
+                 data[dateField] = form.date.value;
+            }
+            
+            if (type === 'achievement') {
+                const achievementType = document.querySelector('input[name="achievementType"]:checked').value;
+                data.type = achievementType;
+                if (achievementType === 'team') {
+                    data.members = achievementMembers;
+                } else {
+                    data.members = []; 
+                }
+            }
+
             if (!data.title) {
                 showNotification("Vui lòng nhập tiêu đề.", true);
                 return;
@@ -540,6 +621,53 @@
         forms.project.saveBtn.addEventListener('click', () => saveData('project'));
         forms.event.saveBtn.addEventListener('click', () => saveData('event'));
         
+        // --- Achievement Members Logic ---
+        forms.achievement.typeRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                forms.achievement.membersSection.classList.toggle('hidden', radio.value !== 'team');
+            });
+        });
+
+        function renderMembers() {
+            const { membersList } = forms.achievement;
+            membersList.innerHTML = '';
+            achievementMembers.forEach((member, index) => {
+                const memberEl = document.createElement('div');
+                memberEl.className = 'flex justify-between items-center bg-slate-50 p-2 rounded';
+                memberEl.innerHTML = `
+                    <div>
+                        <span class="font-semibold">${member.name}</span>
+                        <span class="text-sm text-slate-500 ml-2">(${member.role})</span>
+                    </div>
+                    <button type="button" data-index="${index}" class="remove-member-btn text-red-500 hover:text-red-700 text-sm font-semibold">Xóa</button>
+                `;
+                membersList.appendChild(memberEl);
+            });
+            
+            membersList.querySelectorAll('.remove-member-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const indexToRemove = parseInt(e.target.dataset.index, 10);
+                    achievementMembers.splice(indexToRemove, 1);
+                    renderMembers();
+                });
+            });
+        }
+
+        forms.achievement.addMemberBtn.addEventListener('click', () => {
+            const nameInput = document.getElementById('memberName');
+            const roleInput = document.getElementById('memberRole');
+            const name = nameInput.value.trim();
+            
+            if (name) {
+                achievementMembers.push({ name, role: roleInput.value });
+                renderMembers();
+                nameInput.value = '';
+                nameInput.focus();
+            } else {
+                showNotification('Vui lòng nhập tên thành viên.', true);
+            }
+        });
+
 
         // --- Management Logic ---
         async function renderListForManagement(collectionName, containerId) {
