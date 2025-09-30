@@ -401,12 +401,17 @@
                     method: 'POST',
                     body: formData,
                 });
+                if (!response.ok) {
+                    throw new Error(`Lỗi mạng: ${response.statusText}`);
+                }
                 const result = await response.json();
-                if (result.success) return result.data.url;
-                throw new Error(result.error.message);
+                if (result.success) {
+                    return result.data.url;
+                }
+                throw new Error(result.error?.message || 'Lỗi không xác định từ ImgBB');
             } catch (error) {
                 console.error('ImgBB Upload Error:', error);
-                showNotification(`Lỗi tải ảnh lên: ${error.message}`, true);
+                showNotification(`Lỗi tải ảnh lên: ${error.message}. Hãy kiểm tra kết nối mạng hoặc tiện ích mở rộng.`, true);
                 return null;
             }
         }
@@ -588,7 +593,6 @@
                 for (const file of form.images.files) {
                     const url = await uploadImageToImgBB(file);
                     if (!url) {
-                        showNotification("Một trong các ảnh tải lên thất bại. Vui lòng thử lại.", true);
                         form.saveBtn.disabled = false;
                         return;
                     }
