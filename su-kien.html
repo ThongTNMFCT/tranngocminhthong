@@ -6,77 +6,93 @@
     <title>Sự kiện - Trần Ngọc Minh Thông</title>
     <link rel="icon" href="https://i.ibb.co/cS61WGmW/I-m-Thong-Tran-1.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f8fafc; /* bg-slate-50 */
+        }
+        .content-card {
+            transition: all 0.3s ease-in-out;
+        }
+        .content-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.15), 0 8px 10px -6px rgba(6, 182, 212, 0.15);
+        }
+        
+        /* --- Animation styles --- */
+        [data-animate] {
+            opacity: 0;
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        [data-animate].is-visible {
+            opacity: 1;
+            transform: none !important;
+        }
+        [data-animate="fade-left"] { transform: translateX(40px); }
+        [data-animate="fade-right"] { transform: translateX(-40px); }
     </style>
 </head>
-<body class="bg-slate-50">
+<body class="text-slate-700">
 
     <!-- Header -->
     <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="index.html" class="text-2xl font-bold text-slate-800 hover:text-cyan-600 transition-colors">Trần Ngọc Minh Thông</a>
-            
-            <!-- Desktop Menu -->
             <div class="hidden md:flex items-center space-x-6">
-                <a href="index.html#about" class="text-slate-600 hover:text-cyan-600 transition-colors">Giới thiệu</a>
-                <a href="index.html#skills" class="text-slate-600 hover:text-cyan-600 transition-colors">Kỹ năng</a>
                 <a href="du-an.html" class="text-slate-600 hover:text-cyan-600 transition-colors">Dự án</a>
                 <a href="bai-viet.html" class="text-slate-600 hover:text-cyan-600 transition-colors">Bài viết</a>
                 <a href="thanh-tich.html" class="text-slate-600 hover:text-cyan-600 transition-colors">Thành tích</a>
                 <a href="su-kien.html" class="font-semibold text-cyan-600">Sự kiện</a>
             </div>
             <a href="index.html#contact" class="hidden md:block bg-cyan-500 text-white font-bold py-2 px-5 rounded-lg hover:bg-cyan-600 transition-colors">Liên hệ</a>
-
-             <!-- Mobile Menu Button -->
             <div class="md:hidden">
-                <button id="mobile-menu-button" class="text-slate-800 focus:outline-none z-50 relative">
-                    <svg id="menu-open-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h10"></path></svg>
-                    <svg id="menu-close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                <button id="mobile-menu-button" class="text-slate-800 focus:outline-none z-50 relative h-6 w-6">
+                    <svg id="menu-open-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h10"></path></svg>
+                    <svg id="menu-close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
         </nav>
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-200">
-            <a href="index.html#about" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Giới thiệu</a>
-            <a href="index.html#skills" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Kỹ năng</a>
-            <a href="du-an.html" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Dự án</a>
-            <a href="bai-viet.html" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Bài viết</a>
-            <a href="thanh-tich.html" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Thành tích</a>
-            <a href="su-kien.html" class="block py-3 px-6 text-cyan-600 bg-cyan-50 font-semibold">Sự kiện</a>
-            <a href="index.html#contact" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Liên hệ</a>
+             <a href="du-an.html" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Dự án</a>
+             <a href="bai-viet.html" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Bài viết</a>
+             <a href="thanh-tich.html" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Thành tích</a>
+             <a href="su-kien.html" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Sự kiện</a>
+             <a href="index.html#contact" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Liên hệ</a>
         </div>
     </header>
 
+    <!-- Main Content -->
     <main class="container mx-auto px-6 py-12 min-h-screen">
-        <section id="all-events">
-            <h2 class="text-3xl font-extrabold text-slate-800 mb-12 text-center">Dòng thời gian Sự kiện</h2>
-            
-            <!-- Upcoming Events -->
-            <div id="upcoming-events-section">
-                <h3 class="text-2xl font-bold text-slate-700 mb-6 border-b-2 border-cyan-500 pb-2">Sự kiện sắp tới</h3>
-                <div id="upcoming-events-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Skeleton Loader -->
-                    <div class="animate-pulse bg-white rounded-lg shadow-md overflow-hidden"><div class="w-full h-48 bg-slate-200"></div><div class="p-4"><div class="h-6 bg-slate-200 rounded w-3/4"></div></div></div>
-                </div>
-            </div>
-
-            <!-- Past Events -->
-            <div id="past-events-section" class="mt-16">
-                <h3 class="text-2xl font-bold text-slate-700 mb-6 border-b-2 border-slate-300 pb-2">Sự kiện đã qua</h3>
-                <div id="past-events-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                     <!-- Skeleton Loader -->
-                     <div class="animate-pulse bg-white rounded-lg shadow-md overflow-hidden"><div class="w-full h-48 bg-slate-200"></div><div class="p-4"><div class="h-6 bg-slate-200 rounded w-3/4"></div></div></div>
+        <section id="events-timeline">
+            <h2 class="text-4xl font-extrabold text-slate-900 mb-16 text-center">Dòng thời gian sự kiện</h2>
+            <div id="timeline-container" class="relative">
+                <!-- Skeleton Loader -->
+                <div class="animate-pulse space-y-12">
+                     <div class="absolute top-0 left-1/2 -translate-x-1/2 h-full w-0.5 bg-slate-200" aria-hidden="true"></div>
+                     <div class="flex justify-center my-8">
+                        <div class="bg-slate-200 h-10 w-48 rounded-full"></div>
+                     </div>
+                     <div class="relative">
+                        <div class="md:pr-10 md:w-1/2">
+                            <div class="bg-slate-200 h-64 rounded-lg"></div>
+                        </div>
+                     </div>
+                     <div class="relative">
+                        <div class="md:ml-[50%] md:pl-10">
+                            <div class="bg-slate-200 h-64 rounded-lg"></div>
+                        </div>
+                     </div>
                 </div>
             </div>
         </section>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-slate-800 text-white mt-16">
-        <div class="container mx-auto px-6 py-8 text-center">
-            <p>&copy; 2024 Trần Ngọc Minh Thông. All Rights Reserved.</p>
+     <footer class="py-6 mt-12 border-t border-slate-200 bg-white">
+        <div class="container mx-auto px-6 text-center text-slate-500">
+            <p>Thiết kế & Xây dựng bởi Trần Ngọc Minh Thông</p>
+            <p>&copy; 2025. Mọi quyền được bảo lưu.</p>
         </div>
     </footer>
 
@@ -88,7 +104,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- Mobile Menu ---
+        // Mobile Menu
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         const menuOpenIcon = document.getElementById('menu-open-icon');
@@ -100,81 +116,95 @@
             menuCloseIcon.classList.toggle('hidden');
         });
 
-        function stripHtml(html){
-           let doc = new DOMParser().parseFromString(html, 'text/html');
-           return doc.body.textContent || "";
-        }
+        const timelineContainer = document.getElementById('timeline-container');
 
-        function createEventCard(docId, eventData) {
-            const snippet = stripHtml(eventData.content || '').substring(0, 80) + '...';
-            let thumbnailUrl = eventData.imageUrl || 'https://placehold.co/600x400/e2e8f0/475569?text=Sự+kiện';
-            
-            let eventDateFormatted = '';
-            if (eventData.eventDate) {
-                const [year, month, day] = eventData.eventDate.split('-');
-                eventDateFormatted = `${day}/${month}/${year}`;
-            }
-
-            return `
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300 border border-slate-200">
-                    <a href="view.html?type=events&id=${docId}" class="block">
-                        <div class="overflow-hidden h-48">
-                            <img src="${thumbnailUrl}" alt="${eventData.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        </div>
-                        <div class="p-6">
-                            <p class="text-sm font-semibold text-cyan-600 mb-1">${eventDateFormatted}</p>
-                            <h3 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-cyan-600 transition-colors">${eventData.title}</h3>
-                            <p class="text-slate-600 mb-4 text-sm">${snippet}</p>
-                            <span class="font-semibold text-cyan-600 hover:underline">Xem chi tiết &rarr;</span>
-                        </div>
-                    </a>
-                </div>
-            `;
-        }
-
-
-        async function loadAllEvents() {
-            const upcomingContainer = document.getElementById('upcoming-events-list');
-            const pastContainer = document.getElementById('past-events-list');
-            
+        async function loadEventsTimeline() {
             try {
                 const q = query(collection(db, 'events'), orderBy('eventDate', 'desc'));
                 const querySnapshot = await getDocs(q);
 
                 if (querySnapshot.empty) {
-                    upcomingContainer.innerHTML = '<p class="text-slate-500 col-span-full text-center">Chưa có sự kiện nào được đăng.</p>';
-                    pastContainer.innerHTML = '';
+                    timelineContainer.innerHTML = '<p class="text-slate-500 text-center">Chưa có sự kiện nào được đăng.</p>';
                     return;
                 }
-
-                let upcomingHtml = '';
-                let pastHtml = '';
-
-                const today = new Date();
-                today.setHours(0, 0, 0, 0); 
-
+                
+                const eventsByMonth = {};
                 querySnapshot.forEach((doc) => {
-                    const event = doc.data();
-                    const eventDate = new Date(event.eventDate);
-                    
-                    if (eventDate >= today) {
-                        upcomingHtml += createEventCard(doc.id, event);
-                    } else {
-                        pastHtml += createEventCard(doc.id, event);
-                    }
-                });
+                    const data = doc.data();
+                    if (!data.eventDate) return; 
 
-                upcomingContainer.innerHTML = upcomingHtml || '<p class="text-slate-500 col-span-full text-center">Không có sự kiện nào sắp tới.</p>';
-                pastContainer.innerHTML = pastHtml || '<p class="text-slate-500 col-span-full text-center">Chưa có sự kiện nào đã qua.</p>';
+                    const date = new Date(data.eventDate);
+                    const monthYear = `Tháng ${date.getUTCMonth() + 1}, ${date.getUTCFullYear()}`;
+
+                    if (!eventsByMonth[monthYear]) {
+                        eventsByMonth[monthYear] = [];
+                    }
+                    eventsByMonth[monthYear].push({ id: doc.id, ...data });
+                });
+                
+                timelineContainer.innerHTML = '<div class="absolute top-0 left-0 md:left-1/2 -translate-x-1/2 h-full w-0.5 bg-slate-200" aria-hidden="true"></div>';
+                
+                let itemCounter = 0;
+                for (const monthYear in eventsByMonth) {
+                    const group = eventsByMonth[monthYear];
+                    
+                    const monthMarker = `
+                        <div class="flex justify-center my-8 md:my-12">
+                            <span class="bg-cyan-500 text-white font-bold py-2 px-6 rounded-full shadow-lg z-10 relative">${monthYear}</span>
+                        </div>
+                    `;
+                    timelineContainer.innerHTML += monthMarker;
+
+                    group.forEach(item => {
+                        const isEven = itemCounter % 2 === 0;
+                        const sideClass = isEven ? 'md:pr-10 md:w-1/2' : 'md:ml-[50%] md:pl-10 md:w-1/2';
+                        const animationDirection = isEven ? 'fade-right' : 'fade-left';
+                        
+                        const thumbnailUrl = item.imageUrl || 'https://placehold.co/600x400/e2e8f0/475569?text=Event';
+                        
+                        const itemHtml = `
+                            <div class="relative mb-12" data-animate="${animationDirection}">
+                                <div class="hidden md:block absolute top-8 ${isEven ? 'right-1/2 -mr-2.5' : 'left-1/2 -ml-2.5'} w-5 h-5 bg-white border-4 border-cyan-500 rounded-full z-10"></div>
+                                <div class="${sideClass}">
+                                    <div class="content-card bg-white rounded-lg shadow-lg overflow-hidden group border border-slate-200">
+                                        <a href="view.html?type=events&id=${item.id}" class="block">
+                                            <div class="overflow-hidden h-48">
+                                                <img src="${thumbnailUrl}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                            </div>
+                                            <div class="p-6">
+                                                <h3 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-cyan-600 transition-colors">${item.title}</h3>
+                                                <p class="text-sm text-slate-500">Ngày diễn ra: ${new Date(item.eventDate).toLocaleDateString('vi-VN')}</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        timelineContainer.innerHTML += itemHtml;
+                        itemCounter++;
+                    });
+                }
+                
+                // Add animation observer after content is loaded
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+
 
             } catch (error) {
-                console.error("Error loading events: ", error);
-                upcomingContainer.innerHTML = '<p class="text-red-500 col-span-full text-center">Đã xảy ra lỗi khi tải sự kiện.</p>';
-                pastContainer.innerHTML = '';
+                console.error("Error loading events timeline: ", error);
+                timelineContainer.innerHTML = '<p class="text-red-500 text-center">Đã xảy ra lỗi khi tải dòng thời gian. Vui lòng kiểm tra lại quy tắc bảo mật và đảm bảo các sự kiện đều có "Ngày diễn ra".</p>';
             }
         }
 
-        loadAllEvents();
+        loadEventsTimeline();
     </script>
 
 </body>
