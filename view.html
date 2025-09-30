@@ -195,29 +195,44 @@
                     const data = docSnap.data();
                     document.title = `${data.title || 'Chi tiết'} - Trần Ngọc Minh Thông`;
                     
-                    // Set Banner Title and Image
                     bannerTitle.textContent = data.title;
-                    const bannerImageUrl = data.imageUrl || (data.imageUrls && data.imageUrls[0]);
-                    if (bannerImageUrl) {
-                        titleBanner.style.backgroundImage = `url('${bannerImageUrl}')`;
+                    
+                    let mainContentHtml = '';
+                    
+                    // Handle image slider for achievements/projects, but not for banner
+                    if ((type === 'achievements' || type === 'projects') && data.imageUrls && data.imageUrls.length > 0) {
+                         const bannerImageUrl = data.imageUrls[0];
+                         titleBanner.style.backgroundImage = `url('${bannerImageUrl}')`;
+
+                         mainContentHtml += `
+                            <div class="relative w-full aspect-video mb-8">
+                                <img id="slider-image" src="${bannerImageUrl}" alt="${data.title}" class="w-full h-full object-contain rounded-lg bg-slate-100">
+                                ${data.imageUrls.length > 1 ? `
+                                <button id="prev-btn" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white text-slate-800 p-2 rounded-full shadow-lg transition focus:outline-none">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                                </button>
+                                <button id="next-btn" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white text-slate-800 p-2 rounded-full shadow-lg transition focus:outline-none">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                </button>
+                                ` : ''}
+                            </div>
+                         `;
+                    } else if (data.imageUrl) { // For posts and events
+                        titleBanner.style.backgroundImage = `url('${data.imageUrl}')`;
                     }
+
 
                     // Set Date info
                     let dateString = '';
-                    if (data.timestamp) {
-                        dateString = `Đăng ngày: ${data.timestamp.toDate().toLocaleDateString('vi-VN')}`;
-                    } else if (data.eventDate) {
-                        dateString = `Diễn ra ngày: ${new Date(data.eventDate).toLocaleDateString('vi-VN')}`;
-                    } else if (data.achievementDate) {
-                         dateString = `Ngày đạt: ${new Date(data.achievementDate).toLocaleDateString('vi-VN')}`;
-                    }
+                    if (data.timestamp) dateString = `Đăng ngày: ${data.timestamp.toDate().toLocaleDateString('vi-VN')}`;
+                    else if (data.eventDate) dateString = `Diễn ra ngày: ${new Date(data.eventDate).toLocaleDateString('vi-VN')}`;
+                    else if (data.achievementDate) dateString = `Ngày đạt: ${new Date(data.achievementDate).toLocaleDateString('vi-VN')}`;
                     dateInfo.textContent = dateString;
 
                     // Set members list for team achievements
                     if (type === 'achievements' && data.type === 'team' && data.members && data.members.length > 0) {
                         const mentors = data.members.filter(m => m.role === 'Mentor');
                         const members = data.members.filter(m => m.role !== 'Mentor');
-                        
                         let membersHtml = '';
                         if (mentors.length > 0) {
                             membersHtml += `<h3 class="text-xl font-bold text-slate-800 mb-2">Mentor</h3>`;
@@ -232,7 +247,13 @@
                     }
                     
                     // Set Main Content
-                    contentView.innerHTML = data.content;
+                    mainContentHtml += `<div class="content-view">${data.content}</div>`;
+                    contentView.innerHTML = mainContentHtml;
+                    
+                    // Add slider functionality if it was rendered
+                    if ((type === 'achievements' || type === 'projects') && data.imageUrls && data.imageUrls.length > 1) {
+                        setupSlider(data.imageUrls);
+                    }
 
                 } else {
                      document.getElementById('content-container').innerHTML = '<p class="text-red-500 text-center">Nội dung không tồn tại.</p>';
@@ -243,6 +264,27 @@
                  document.getElementById('content-container').innerHTML = '<p class="text-red-500 text-center">Lỗi khi tải dữ liệu.</p>';
                  bannerTitle.textContent = "Lỗi";
             }
+        }
+        
+        let currentImageIndex = 0;
+        function setupSlider(images) {
+            const sliderImage = document.getElementById('slider-image');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+
+            function updateImage() {
+                sliderImage.src = images[currentImageIndex];
+            }
+
+            prevBtn.addEventListener('click', () => {
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                updateImage();
+            });
+
+            nextBtn.addEventListener('click', () => {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                updateImage();
+            });
         }
 
         loadContent();
