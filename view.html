@@ -6,7 +6,7 @@
     <title>Xem chi tiết - Trần Ngọc Minh Thông</title>
     <link rel="icon" href="https://i.ibb.co/cS61WGmW/I-m-Thong-Tran-1.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Đồng bộ font chữ với trang chủ -->
+    <!-- Đồng bộ font chữ với hệ thống -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <style>
         body { 
@@ -44,8 +44,16 @@
             margin-bottom: 1em;
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
-        .slider-container {
-            aspect-ratio: 16 / 9;
+        .title-banner {
+            background-size: cover;
+            background-position: center;
+        }
+        .title-banner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(2px);
         }
     </style>
 </head>
@@ -78,33 +86,49 @@
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main id="main-content" class="container mx-auto px-6 py-12 min-h-screen">
-        <!-- Breadcrumbs -->
-        <div id="breadcrumb" class="mb-8 text-sm text-slate-500">
-            <a href="index.html" class="hover:text-cyan-600">Trang chủ</a>
-            <span class="mx-2">/</span>
-            <span id="breadcrumb-category">...</span>
+    <!-- Title Banner -->
+    <div id="title-banner" class="relative title-banner flex items-center justify-center h-72 md:h-96 bg-slate-700">
+        <div class="text-center relative z-10 p-4">
+            <h1 id="banner-title" class="text-4xl md:text-6xl font-black text-white" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.7);">
+                <!-- Skeleton Loader -->
+                <div class="animate-pulse bg-white/30 rounded h-12 w-96 mx-auto"></div>
+            </h1>
         </div>
+    </div>
 
-        <!-- Content will be loaded here -->
-        <div id="content-container" class="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-lg shadow-lg">
-            <!-- Skeleton Loader -->
-            <div class="animate-pulse">
-                <div class="h-8 bg-slate-200 rounded w-3/4 mb-4"></div>
-                <div class="h-4 bg-slate-200 rounded w-1/4 mb-8"></div>
-                <div class="h-64 bg-slate-200 rounded mb-8"></div>
-                <div class="space-y-3">
-                    <div class="h-4 bg-slate-200 rounded"></div>
+
+    <!-- Main Content -->
+    <main id="main-content" class="container mx-auto px-6 py-12 min-h-screen -mt-24">
+        <div id="content-container" class="relative z-20 max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-lg shadow-2xl">
+            <!-- Breadcrumbs and Date -->
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 border-b pb-4">
+                <div id="breadcrumb" class="text-sm text-slate-500 mb-2 sm:mb-0">
+                    <a href="index.html" class="hover:text-cyan-600">Trang chủ</a>
+                    <span class="mx-2">/</span>
+                    <span id="breadcrumb-category">...</span>
+                </div>
+                <div id="date-info" class="text-sm text-slate-500 font-medium"></div>
+            </div>
+
+            <!-- Members List (for achievements) -->
+            <div id="members-container" class="hidden mb-8"></div>
+            
+            <!-- Content -->
+            <div id="content-view" class="content-view">
+                 <!-- Skeleton Loader -->
+                <div class="animate-pulse space-y-4">
+                    <div class="h-4 bg-slate-200 rounded w-full"></div>
                     <div class="h-4 bg-slate-200 rounded w-5/6"></div>
                     <div class="h-4 bg-slate-200 rounded w-4/6"></div>
+                     <div class="h-4 bg-slate-200 rounded w-full mt-6"></div>
+                    <div class="h-4 bg-slate-200 rounded w-2/3"></div>
                 </div>
             </div>
         </div>
     </main>
 
     <!-- Footer -->
-     <footer class="py-6 mt-12 border-t border-slate-200">
+     <footer class="py-6 mt-12 border-t border-slate-200 bg-white">
         <div class="container mx-auto px-6 text-center text-slate-500">
             <p>Thiết kế & Xây dựng bởi Trần Ngọc Minh Thông</p>
             <p>&copy; 2025. Mọi quyền được bảo lưu.</p>
@@ -131,9 +155,13 @@
             menuCloseIcon.classList.toggle('hidden');
         });
 
-        const contentContainer = document.getElementById('content-container');
+        const titleBanner = document.getElementById('title-banner');
+        const bannerTitle = document.getElementById('banner-title');
         const breadcrumbCategory = document.getElementById('breadcrumb-category');
-        let currentImageIndex = 0;
+        const dateInfo = document.getElementById('date-info');
+        const membersContainer = document.getElementById('members-container');
+        const contentView = document.getElementById('content-view');
+
 
         async function loadContent() {
             const params = new URLSearchParams(window.location.search);
@@ -141,7 +169,8 @@
             const id = params.get('id');
 
             if (!type || !id) {
-                contentContainer.innerHTML = '<p class="text-red-500 text-center">Không tìm thấy nội dung yêu cầu.</p>';
+                document.getElementById('content-container').innerHTML = '<p class="text-red-500 text-center">Không tìm thấy nội dung yêu cầu.</p>';
+                bannerTitle.textContent = "Lỗi";
                 return;
             }
 
@@ -154,12 +183,8 @@
             };
             const categoryName = categoryMap[type] || '...';
             breadcrumbCategory.innerHTML = `<a href="${type.slice(0,-1)}.html" class="hover:text-cyan-600">${categoryName}</a>`;
-            document.title = `Chi tiết - ${categoryName}`;
-            
             const activeNav = document.getElementById(`nav-${type}`);
-            if(activeNav) {
-                activeNav.classList.add('font-semibold', 'text-cyan-600');
-            }
+            if(activeNav) activeNav.classList.add('font-semibold', 'text-cyan-600');
 
 
             try {
@@ -170,64 +195,54 @@
                     const data = docSnap.data();
                     document.title = `${data.title || 'Chi tiết'} - Trần Ngọc Minh Thông`;
                     
-                    let contentHtml = `<h1 class="text-4xl font-black text-slate-900 mb-2">${data.title}</h1>`;
-                    
-                    if (data.timestamp) {
-                        const date = data.timestamp.toDate();
-                        contentHtml += `<p class="text-slate-500 mb-8">Đăng ngày ${date.toLocaleDateString('vi-VN')}</p>`;
-                    } else if (data.eventDate) {
-                         contentHtml += `<p class="text-slate-500 mb-8">Diễn ra vào ngày: ${new Date(data.eventDate).toLocaleDateString('vi-VN')}</p>`;
-                    }
-                    
-                    if (data.imageUrls && data.imageUrls.length > 0) {
-                         contentHtml += `
-                            <div class="relative w-full slider-container mb-8">
-                                <img id="slider-image" src="${data.imageUrls[0]}" alt="${data.title}" class="w-full h-full object-contain rounded-lg bg-slate-100">
-                                ${data.imageUrls.length > 1 ? `
-                                <button id="prev-btn" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white text-slate-800 font-bold p-2 rounded-full shadow-md transition">&lt;</button>
-                                <button id="next-btn" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white text-slate-800 font-bold p-2 rounded-full shadow-md transition">&gt;</button>
-                                ` : ''}
-                            </div>
-                         `;
-                    } else if (data.imageUrl) {
-                        contentHtml += `<img src="${data.imageUrl}" alt="${data.title}" class="w-full h-auto object-cover rounded-lg mb-8">`;
+                    // Set Banner Title and Image
+                    bannerTitle.textContent = data.title;
+                    const bannerImageUrl = data.imageUrl || (data.imageUrls && data.imageUrls[0]);
+                    if (bannerImageUrl) {
+                        titleBanner.style.backgroundImage = `url('${bannerImageUrl}')`;
                     }
 
-                    contentHtml += `<div class="content-view">${data.content}</div>`;
-                    contentContainer.innerHTML = contentHtml;
-                    
-                    // Add slider functionality if exists
-                    if (data.imageUrls && data.imageUrls.length > 1) {
-                        setupSlider(data.imageUrls);
+                    // Set Date info
+                    let dateString = '';
+                    if (data.timestamp) {
+                        dateString = `Đăng ngày: ${data.timestamp.toDate().toLocaleDateString('vi-VN')}`;
+                    } else if (data.eventDate) {
+                        dateString = `Diễn ra ngày: ${new Date(data.eventDate).toLocaleDateString('vi-VN')}`;
+                    } else if (data.achievementDate) {
+                         dateString = `Ngày đạt: ${new Date(data.achievementDate).toLocaleDateString('vi-VN')}`;
                     }
+                    dateInfo.textContent = dateString;
+
+                    // Set members list for team achievements
+                    if (type === 'achievements' && data.type === 'team' && data.members && data.members.length > 0) {
+                        const mentors = data.members.filter(m => m.role === 'Mentor');
+                        const members = data.members.filter(m => m.role !== 'Mentor');
+                        
+                        let membersHtml = '';
+                        if (mentors.length > 0) {
+                            membersHtml += `<h3 class="text-xl font-bold text-slate-800 mb-2">Mentor</h3>`;
+                            membersHtml += `<div class="flex flex-wrap gap-x-4 gap-y-2 mb-4">` + mentors.map(m => `<span class="bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-sm font-medium">${m.name}</span>`).join('') + `</div>`;
+                        }
+                        if (members.length > 0) {
+                             membersHtml += `<h3 class="text-xl font-bold text-slate-800 mb-2">Thành viên</h3>`;
+                            membersHtml += `<div class="flex flex-wrap gap-x-4 gap-y-2">` + members.map(m => `<span class="bg-slate-100 text-slate-800 px-3 py-1 rounded-full text-sm font-medium">${m.name}</span>`).join('') + `</div>`;
+                        }
+                        membersContainer.innerHTML = membersHtml;
+                        membersContainer.classList.remove('hidden');
+                    }
+                    
+                    // Set Main Content
+                    contentView.innerHTML = data.content;
 
                 } else {
-                    contentContainer.innerHTML = '<p class="text-red-500 text-center">Nội dung không tồn tại.</p>';
+                     document.getElementById('content-container').innerHTML = '<p class="text-red-500 text-center">Nội dung không tồn tại.</p>';
+                     bannerTitle.textContent = "Không tìm thấy";
                 }
             } catch (error) {
                 console.error("Error fetching document:", error);
-                contentContainer.innerHTML = '<p class="text-red-500 text-center">Lỗi khi tải dữ liệu.</p>';
+                 document.getElementById('content-container').innerHTML = '<p class="text-red-500 text-center">Lỗi khi tải dữ liệu.</p>';
+                 bannerTitle.textContent = "Lỗi";
             }
-        }
-
-        function setupSlider(images) {
-            const sliderImage = document.getElementById('slider-image');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-
-            function updateImage() {
-                sliderImage.src = images[currentImageIndex];
-            }
-
-            prevBtn.addEventListener('click', () => {
-                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-                updateImage();
-            });
-
-            nextBtn.addEventListener('click', () => {
-                currentImageIndex = (currentImageIndex + 1) % images.length;
-                updateImage();
-            });
         }
 
         loadContent();
