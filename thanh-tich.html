@@ -3,73 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thành tích - Trần Ngọc Minh Thông</title>
+    <title>Thành Tích - Trần Ngọc Minh Thông</title>
     <link rel="icon" href="https://i.ibb.co/cS61WGmW/I-m-Thong-Tran-1.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .skeleton-card {
-            background-color: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            overflow: hidden;
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f8fafc; /* bg-slate-50 */
+        }
+        .content-card {
+            transition: all 0.3s ease-in-out;
+        }
+        .content-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.15), 0 8px 10px -6px rgba(6, 182, 212, 0.15);
         }
     </style>
 </head>
-<body class="bg-slate-50">
+<body class="text-slate-700">
 
     <!-- Header -->
     <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="index.html" class="text-2xl font-bold text-slate-800 hover:text-cyan-600 transition-colors">Trần Ngọc Minh Thông</a>
-            
-            <!-- Desktop Menu -->
             <div class="hidden md:flex items-center space-x-6">
-                <a href="index.html#about" class="text-slate-600 hover:text-cyan-600 transition-colors">Giới thiệu</a>
-                <a href="index.html#skills" class="text-slate-600 hover:text-cyan-600 transition-colors">Kỹ năng</a>
                 <a href="du-an.html" class="text-slate-600 hover:text-cyan-600 transition-colors">Dự án</a>
                 <a href="bai-viet.html" class="text-slate-600 hover:text-cyan-600 transition-colors">Bài viết</a>
                 <a href="thanh-tich.html" class="font-semibold text-cyan-600">Thành tích</a>
+                <a href="su-kien.html" class="text-slate-600 hover:text-cyan-600 transition-colors">Sự kiện</a>
             </div>
             <a href="index.html#contact" class="hidden md:block bg-cyan-500 text-white font-bold py-2 px-5 rounded-lg hover:bg-cyan-600 transition-colors">Liên hệ</a>
-
-             <!-- Mobile Menu Button -->
             <div class="md:hidden">
-                <button id="mobile-menu-button" class="text-slate-800 focus:outline-none z-50 relative">
-                    <svg id="menu-open-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h10"></path></svg>
-                    <svg id="menu-close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                <button id="mobile-menu-button" class="text-slate-800 focus:outline-none z-50 relative h-6 w-6">
+                    <svg id="menu-open-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h10"></path></svg>
+                    <svg id="menu-close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
         </nav>
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-200">
-            <a href="index.html#about" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Giới thiệu</a>
-            <a href="index.html#skills" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Kỹ năng</a>
-            <a href="du-an.html" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Dự án</a>
-            <a href="bai-viet.html" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Bài viết</a>
-            <a href="thanh-tich.html" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Thành tích</a>
-            <a href="su-kien.html" class="block py-3 px-6 text-cyan-600 bg-cyan-50 font-semibold">Sự kiện</a>
-            <a href="index.html#contact" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Liên hệ</a>
+             <a href="du-an.html" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Dự án</a>
+             <a href="bai-viet.html" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Bài viết</a>
+             <a href="thanh-tich.html" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Thành tích</a>
+             <a href="su-kien.html" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Sự kiện</a>
+             <a href="index.html#contact" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Liên hệ</a>
         </div>
     </header>
 
+    <!-- Main Content -->
     <main class="container mx-auto px-6 py-12 min-h-screen">
-        <section id="all-achievements">
-            <h2 class="text-3xl font-extrabold text-slate-800 mb-8 text-center">Tất cả Thành Tích & Giải Thưởng</h2>
-            <div id="achievements-list-full" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <section id="achievements-timeline">
+            <h2 class="text-4xl font-extrabold text-slate-900 mb-12 text-center">Dòng thời gian thành tích</h2>
+            <div id="timeline-container">
                 <!-- Skeleton Loader -->
-                <div class="skeleton-card animate-pulse"><div class="w-full h-48 bg-slate-200"></div><div class="p-4"><div class="h-6 bg-slate-200 rounded w-3/4"></div></div></div>
-                <div class="skeleton-card animate-pulse"><div class="w-full h-48 bg-slate-200"></div><div class="p-4"><div class="h-6 bg-slate-200 rounded w-3/4"></div></div></div>
-                <div class="skeleton-card animate-pulse"><div class="w-full h-48 bg-slate-200"></div><div class="p-4"><div class="h-6 bg-slate-200 rounded w-3/4"></div></div></div>
+                <div class="animate-pulse space-y-10">
+                    <div>
+                        <div class="h-8 bg-slate-200 rounded w-1/4 mb-6"></div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <div class="bg-slate-200 rounded-lg h-64"></div>
+                            <div class="bg-slate-200 rounded-lg h-64"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="h-8 bg-slate-200 rounded w-1/4 mb-6"></div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <div class="bg-slate-200 rounded-lg h-64"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-slate-800 text-white mt-16">
-        <div class="container mx-auto px-6 py-8 text-center">
-            <p>&copy; 2024 Trần Ngọc Minh Thông. All Rights Reserved.</p>
+     <footer class="py-6 mt-12 border-t border-slate-200 bg-white">
+        <div class="container mx-auto px-6 text-center text-slate-500">
+            <p>Thiết kế & Xây dựng bởi Trần Ngọc Minh Thông</p>
+            <p>&copy; 2025. Mọi quyền được bảo lưu.</p>
         </div>
     </footer>
 
@@ -81,7 +91,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- Mobile Menu ---
+        // Mobile Menu
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         const menuOpenIcon = document.getElementById('menu-open-icon');
@@ -93,47 +103,76 @@
             menuCloseIcon.classList.toggle('hidden');
         });
 
-        async function loadAllAchievements() {
-            const container = document.getElementById('achievements-list-full');
+        const timelineContainer = document.getElementById('timeline-container');
+
+        async function loadAchievementsTimeline() {
             try {
-                const q = query(collection(db, 'achievements'), orderBy('timestamp', 'desc'));
+                // Sắp xếp theo ngày đạt thành tích, mới nhất trước tiên
+                const q = query(collection(db, 'achievements'), orderBy('achievementDate', 'desc'));
                 const querySnapshot = await getDocs(q);
 
                 if (querySnapshot.empty) {
-                    container.innerHTML = '<p class="text-slate-500 col-span-full text-center">Chưa có thành tích nào được đăng.</p>';
+                    timelineContainer.innerHTML = '<p class="text-slate-500 text-center">Chưa có thành tích nào được đăng.</p>';
                     return;
                 }
-
-                container.innerHTML = '';
+                
+                // Gom nhóm thành tích theo tháng và năm
+                const achievementsByMonth = {};
                 querySnapshot.forEach((doc) => {
-                    const achievement = doc.data();
-                    let thumbnailUrl = 'https://placehold.co/600x400/e2e8f0/475569?text=Chưa+có+ảnh';
-                    if (achievement.imageUrls && achievement.imageUrls.length > 0) {
-                        thumbnailUrl = achievement.imageUrls[0];
-                    }
+                    const data = doc.data();
+                    if (!data.achievementDate) return; 
 
-                    const card = document.createElement('div');
-                    card.className = 'bg-white rounded-lg shadow-lg overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300 border border-slate-200';
-                    card.innerHTML = `
-                        <a href="view.html?type=achievements&id=${doc.id}" class="block">
-                            <div class="overflow-hidden h-48">
-                                <img src="${thumbnailUrl}" alt="${achievement.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-cyan-600 transition-colors">${achievement.title}</h3>
-                                <span class="font-semibold text-cyan-600 hover:underline">Xem chi tiết &rarr;</span>
-                            </div>
-                        </a>
-                    `;
-                    container.appendChild(card);
+                    const date = new Date(data.achievementDate);
+                    // Tạo key để gom nhóm, ví dụ: "Tháng 9, 2025"
+                    const monthYear = `Tháng ${date.getUTCMonth() + 1}, ${date.getUTCFullYear()}`;
+
+                    if (!achievementsByMonth[monthYear]) {
+                        achievementsByMonth[monthYear] = [];
+                    }
+                    achievementsByMonth[monthYear].push({ id: doc.id, ...data });
                 });
+                
+                timelineContainer.innerHTML = '';
+                
+                // Hiển thị các nhóm đã gom
+                for (const monthYear in achievementsByMonth) {
+                    const group = achievementsByMonth[monthYear];
+                    const groupEl = document.createElement('div');
+                    groupEl.className = 'py-8 border-b border-slate-200 last:border-b-0';
+                    
+                    let cardsHtml = group.map(item => {
+                        const thumbnailUrl = (item.imageUrls && item.imageUrls[0]) || 'https://placehold.co/600x400/e2e8f0/475569?text=Image';
+                        return `
+                            <div class="content-card bg-white rounded-lg shadow-lg overflow-hidden group border border-slate-200">
+                               <a href="view.html?type=achievements&id=${item.id}" class="block">
+                                    <div class="overflow-hidden h-48">
+                                        <img src="${thumbnailUrl}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                    </div>
+                                    <div class="p-6">
+                                        <h3 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-cyan-600 transition-colors">${item.title}</h3>
+                                        <p class="text-sm text-slate-500">Ngày đạt: ${new Date(item.achievementDate).toLocaleDateString('vi-VN')}</p>
+                                    </div>
+                               </a>
+                            </div>
+                        `;
+                    }).join('');
+
+                    groupEl.innerHTML = `
+                        <h3 class="text-2xl font-bold text-slate-800 mb-6">${monthYear}</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            ${cardsHtml}
+                        </div>
+                    `;
+                    timelineContainer.appendChild(groupEl);
+                }
+
             } catch (error) {
-                console.error("Error loading achievements: ", error);
-                container.innerHTML = '<p class="text-red-500 col-span-full text-center">Đã xảy ra lỗi khi tải thành tích. Vui lòng kiểm tra lại quy tắc bảo mật trên Firebase.</p>';
+                console.error("Error loading achievements timeline: ", error);
+                timelineContainer.innerHTML = '<p class="text-red-500 text-center">Đã xảy ra lỗi khi tải dòng thời gian. Vui lòng kiểm tra lại quy tắc bảo mật và đảm bảo các thành tích đều có "Ngày đạt".</p>';
             }
         }
 
-        loadAllAchievements();
+        loadAchievementsTimeline();
     </script>
 
 </body>
