@@ -1,76 +1,105 @@
 <!DOCTYPE html>
-<html lang="vi" class="scroll-smooth">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bài viết - Trần Ngọc Minh Thông</title>
     <link rel="icon" href="https://i.ibb.co/cS61WGmW/I-m-Thong-Tran-1.png" type="image/png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .skeleton-card {
-            background-color: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            overflow: hidden;
+        :root {
+            --dark-navy: #0a192f;
+            --navy: #112240;
+            --light-navy: #233554;
+            --slate: #8892b0;
+            --light-slate: #a8b2d1;
+            --lightest-slate: #ccd6f6;
+            --white: #e6f1ff;
+            --accent: #64ffda;
+            --font-mono: 'Fira Code', monospace;
+            --transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: var(--font-mono);
+            background-color: var(--dark-navy);
+            color: var(--slate);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        body::after {
+            content: "";
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15) 1px, transparent 1px, transparent 2px);
+            pointer-events: none; z-index: 9999; opacity: 0.5;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+        .main-header {
+            position: sticky; top: 0; z-index: 10;
+            background-color: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0; border-bottom: 1px solid var(--light-navy);
+        }
+        .main-header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo a { color: var(--accent); font-weight: bold; text-decoration: none; font-size: 1.5rem; }
+        .main-nav ol { display: flex; list-style: none; gap: 1.5rem; }
+        .main-nav a { color: var(--lightest-slate); text-decoration: none; transition: var(--transition); }
+        .main-nav a:hover { color: var(--accent); }
+        .main-nav a::before { content: '[' counter(nav-item) '] '; counter-increment: nav-item; color: var(--accent); }
+        .page-title {
+            font-size: 2.5rem;
+            color: var(--lightest-slate);
+            margin: 4rem 0 2rem;
+            text-align: center;
+        }
+        .card-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem; padding-bottom: 4rem;
+        }
+        .card {
+            background-color: var(--light-navy); padding: 1.5rem; border-radius: 4px;
+            transition: var(--transition); box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 20px 30px -15px rgba(2,12,27,0.7); }
+        .card a { text-decoration: none; }
+        .card-title { color: var(--lightest-slate); font-size: 1.25rem; margin-bottom: 1rem; transition: var(--transition); }
+        .card:hover .card-title { color: var(--accent); }
+        .card-content { color: var(--light-slate); font-size: 0.9rem; margin-bottom: 1rem; }
+        .card-footer span { color: var(--accent); font-size: 0.8rem; }
+         .main-footer {
+            text-align: center; padding: 1.5rem; font-size: 0.8rem; color: var(--slate);
+            border-top: 1px solid var(--light-navy);
         }
     </style>
 </head>
-<body class="bg-slate-50">
+<body>
 
-    <!-- Header -->
-    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="index.html" class="text-2xl font-bold text-slate-800 hover:text-cyan-600 transition-colors">Trần Ngọc Minh Thông</a>
-            
-            <!-- Desktop Menu -->
-            <div class="hidden md:flex items-center space-x-6">
-                <a href="index.html#about" class="text-slate-600 hover:text-cyan-600 transition-colors">Giới thiệu</a>
-                <a href="index.html#skills" class="text-slate-600 hover:text-cyan-600 transition-colors">Kỹ năng</a>
-                <a href="du-an.html" class="text-slate-600 hover:text-cyan-600 transition-colors">Dự án</a>
-                <a href="bai-viet.html" class="font-semibold text-cyan-600">Bài viết</a>
-                <a href="thanh-tich.html" class="text-slate-600 hover:text-cyan-600 transition-colors">Thành tích</a>
-            </div>
-            <a href="index.html#contact" class="hidden md:block bg-cyan-500 text-white font-bold py-2 px-5 rounded-lg hover:bg-cyan-600 transition-colors">Liên hệ</a>
-
-             <!-- Mobile Menu Button -->
-            <div class="md:hidden">
-                <button id="mobile-menu-button" class="text-slate-800 focus:outline-none z-50 relative">
-                    <svg id="menu-open-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h10"></path></svg>
-                    <svg id="menu-close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-            </div>
-        </nav>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-200">
-            <a href="index.html#about" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Giới thiệu</a>
-            <a href="index.html#skills" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Kỹ năng</a>
-            <a href="du-an.html" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Dự án</a>
-            <a href="bai-viet.html" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Bài viết</a>
-            <a href="thanh-tich.html" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Thành tích</a>
-            <a href="su-kien.html" class="block py-3 px-6 text-cyan-600 bg-cyan-50 font-semibold">Sự kiện</a>
-            <a href="index.html#contact" class="block py-3 px-6 text-slate-600 hover:bg-cyan-50 transition-colors">Liên hệ</a>
+    <header class="main-header">
+        <div class="container">
+            <div class="logo"><a href="index.html">./ThongTNM</a></div>
+            <nav class="main-nav">
+                <ol>
+                     <li><a href="index.html#about">Giới thiệu</a></li>
+                    <li><a href="du-an.html">Dự án</a></li>
+                    <li><a href="bai-viet.html">Bài viết</a></li>
+                    <li><a href="thanh-tich.html">Thành tích</a></li>
+                    <li><a href="index.html#contact">Liên hệ</a></li>
+                </ol>
+            </nav>
         </div>
     </header>
 
-    <main class="container mx-auto px-6 py-12 min-h-screen">
-        <section id="all-posts">
-            <h2 class="text-3xl font-extrabold text-slate-800 mb-8 text-center">Tất cả Bài viết</h2>
-            <div id="posts-list-full" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Skeleton Loader -->
-                <div class="skeleton-card animate-pulse"><div class="w-full h-48 bg-slate-200"></div><div class="p-4"><div class="h-6 bg-slate-200 rounded w-3/4 mb-2"></div><div class="h-4 bg-slate-200 rounded w-full"></div><div class="h-4 bg-slate-200 rounded w-1/2 mt-1"></div></div></div>
-                <div class="skeleton-card animate-pulse"><div class="w-full h-48 bg-slate-200"></div><div class="p-4"><div class="h-6 bg-slate-200 rounded w-3/4 mb-2"></div><div class="h-4 bg-slate-200 rounded w-full"></div><div class="h-4 bg-slate-200 rounded w-1/2 mt-1"></div></div></div>
-                <div class="skeleton-card animate-pulse"><div class="w-full h-48 bg-slate-200"></div><div class="p-4"><div class="h-6 bg-slate-200 rounded w-3/4 mb-2"></div><div class="h-4 bg-slate-200 rounded w-full"></div><div class="h-4 bg-slate-200 rounded w-1/2 mt-1"></div></div></div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-slate-800 text-white mt-16">
-        <div class="container mx-auto px-6 py-8 text-center">
-            <p>&copy; 2024 Trần Ngọc Minh Thông. All Rights Reserved.</p>
+    <main class="container">
+        <h1 class="page-title">Tất cả Bài viết</h1>
+        <div id="data-list-full" class="card-grid">
+            <p>Đang tải dữ liệu...</p>
         </div>
+    </main>
+    
+    <footer class="main-footer">
+        <p>Thiết kế & Xây dựng bởi Trần Ngọc Minh Thông &copy; 2024</p>
     </footer>
 
     <script type="module">
@@ -81,65 +110,50 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- Mobile Menu ---
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const menuOpenIcon = document.getElementById('menu-open-icon');
-        const menuCloseIcon = document.getElementById('menu-close-icon');
-
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            menuOpenIcon.classList.toggle('hidden');
-            menuCloseIcon.classList.toggle('hidden');
-        });
-
         function stripHtml(html){
            let doc = new DOMParser().parseFromString(html, 'text/html');
            return doc.body.textContent || "";
         }
 
-        async function loadAllPosts() {
-            const container = document.getElementById('posts-list-full');
+        async function loadAllData() {
+            const container = document.getElementById('data-list-full');
+            const collectionName = 'posts'; 
+            const type = 'posts'; 
+
             try {
-                const q = query(collection(db, 'posts'), orderBy('timestamp', 'desc'));
+                const q = query(collection(db, collectionName), orderBy('timestamp', 'desc'));
                 const querySnapshot = await getDocs(q);
 
                 if (querySnapshot.empty) {
-                    container.innerHTML = '<p class="text-slate-500 col-span-full text-center">Chưa có bài viết nào được đăng.</p>';
+                    container.innerHTML = '<p>Chưa có nội dung nào được đăng.</p>';
                     return;
                 }
 
                 container.innerHTML = '';
                 querySnapshot.forEach((doc) => {
-                    const post = doc.data();
-                    const snippet = stripHtml(post.content || '').substring(0, 80) + '...';
-                    let thumbnailUrl = post.imageUrl || 'https://placehold.co/600x400/e2e8f0/475569?text=Chưa+có+ảnh';
-                    
+                    const item = doc.data();
+                    const snippet = stripHtml(item.content || '').substring(0, 100) + '...';
                     const card = document.createElement('div');
-                    card.className = 'bg-white rounded-lg shadow-lg overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300 border border-slate-200';
+                    card.className = 'card';
                     card.innerHTML = `
-                        <a href="view.html?type=posts&id=${doc.id}" class="block">
-                            <div class="overflow-hidden h-48">
-                                <img src="${thumbnailUrl}" alt="${post.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-cyan-600 transition-colors">${post.title}</h3>
-                                <p class="text-slate-600 mb-4 text-sm">${snippet}</p>
-                                <span class="font-semibold text-cyan-600 hover:underline">Xem chi tiết &rarr;</span>
+                        <a href="view.html?type=${type}&id=${doc.id}">
+                            <h3 class="card-title">${item.title}</h3>
+                            <div class="card-content"><p>${snippet}</p></div>
+                            <div class="card-footer">
+                                <span>Xem chi tiết &rarr;</span>
                             </div>
                         </a>
                     `;
                     container.appendChild(card);
                 });
             } catch (error) {
-                console.error("Error loading posts: ", error);
-                container.innerHTML = '<p class="text-red-500 col-span-full text-center">Đã xảy ra lỗi khi tải bài viết. Vui lòng kiểm tra lại quy tắc bảo mật trên Firebase.</p>';
+                console.error("Error loading data: ", error);
+                container.innerHTML = '<p style="color:red;">Đã xảy ra lỗi khi tải dữ liệu.</p>';
             }
         }
 
-        loadAllPosts();
+        loadAllData();
     </script>
 
 </body>
 </html>
-
